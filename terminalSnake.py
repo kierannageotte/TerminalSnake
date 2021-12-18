@@ -24,10 +24,9 @@ def make_dot():
 
 hist1 = (0,1)
 hist2 = (0,2)
-hist3 = (0,3)
 
-#dot = make_dot()
-dot = (active_cells[0][0] + 2, 0)
+dot = make_dot()
+#dot = (active_cells[0][0] + 2, 0)
 
 #Main Gameplay Loop
 while action != "quit":
@@ -49,11 +48,8 @@ while action != "quit":
             break
 
     #Store current cells
-    hist3 = hist2
     hist2 = hist1
-    print(hist1)
     hist1 = active_cells[-1]
-    #store_cell()
 
     # Execute move;
     # First, "shift" all cells right one
@@ -62,24 +58,21 @@ while action != "quit":
 
     # Then, change value of [0] cell
     if direction == "east":
-        #active_cells[0][0] += 1
         active_cells[0] = add_tuple(active_cells[0], (1,0))
     elif direction == "west":
-        #active_cells[0][0] -= 1
         active_cells[0] = add_tuple(active_cells[0], (-1, 0))
     elif direction == "north":
-        #active_cells[0][1] += 1
         active_cells[0] = add_tuple(active_cells[0], (0, 1))
     elif direction == "south":
-        #active_cells[0][1] -= 1
         active_cells[0] = add_tuple(active_cells[0], (0, -1))
 
-    #print("cell_history: " + str(cell_history))
-
     if active_cells[0] == dot:
-        #print("cell history 2: " + str(cell_history))
         active_cells.append(hist1)
         hist1 = hist2
-        hist2 = hist3
-        #dot = make_dot()
-        dot = (active_cells[0][0] + 2, 0)
+        dot = make_dot()
+        #dot = (active_cells[0][0] + 2, 0)
+
+    tail = active_cells[1:]
+    if active_cells[0] in tail:
+        print("BANG! Game over")
+        action = "quit"
